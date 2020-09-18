@@ -1,6 +1,11 @@
 ﻿#pragma once
 #include "pch.h"
 
+#include <stdbool.h>
+
+#include "TypeDefs.h"
+#include "Tetrimino.h"
+
 enum class GameState
 {
     Waiting,
@@ -23,7 +28,7 @@ public:
     void Run();
 
     // One game loop iteration
-    void Tick();
+    void Tick(const bool fall);
 
     // Draw once per loop iteration
     void Draw();
@@ -31,10 +36,23 @@ public:
     void Clear();
 
 private:
+    bool ValidateTetrimino(const Tetrimino& tetrimino);
+    void LockCurrentPiece();
+    
     const unsigned int _width, _height;
     bool _quit = false;
 
     HANDLE _hConsole;
+    HANDLE _hConsoleInput;
     CONSOLE_SCREEN_BUFFER_INFO _initConsoleInfo;
     COORD _origin;
+
+    Map _map;
+
+    std::unique_ptr<Tetrimino> _currentPiece;
+    std::unique_ptr<Tetrimino> _fallPreview;
+    std::vector<COORD> _oldPiecePos;
+
+    bool _refreshMap = false;
+    unsigned int _fallCounter = 0;
 };

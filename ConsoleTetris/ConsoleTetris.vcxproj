@@ -156,10 +156,13 @@
   <ItemGroup>
     <ClCompile Include="ConsoleTetris.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Tetrimino.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ConsoleTetris.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Tetrimino.h" />
+    <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
