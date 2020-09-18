@@ -48,12 +48,7 @@ void ConsoleTetris::Init()
     for (unsigned int i = 0; i < _height; ++i)
         _map[i].resize(_width, false);
 
-    _currentPiece = std::make_unique<ShapeL>();
-    _currentPiece->SetRotation(0);
-    _currentPiece->SetPosition( {  0, 0});
-    _fallPreview = std::make_unique<ShapeL>();
-    _fallPreview->SetRotation(0);
-    _fallPreview->SetPosition( {  0, 0});
+    SpawnTetrimino();
 }
 
 void ConsoleTetris::Run()
@@ -216,14 +211,54 @@ void ConsoleTetris::LockCurrentPiece()
 
     _oldPiecePos.clear();
     _currentPiece.reset();
-    _currentPiece = std::make_unique<ShapeL>();
-    _currentPiece->SetRotation(0);
-    _currentPiece->SetPosition({0, 0});
+    _fallPreview.reset();
+    SpawnTetrimino();
     if (!ValidateTetrimino(*_currentPiece))
     {
         std::cout << std::endl << "Game Over!" << std::endl;
         _quit = true;
     }
+}
+
+void ConsoleTetris::SpawnTetrimino()
+{
+    int r = rand() % 7;
+    switch (r)
+    {
+        case 0:
+            _currentPiece = std::make_unique<ShapeL>();
+            _fallPreview = std::make_unique<ShapeL>();
+            break;
+        case 1:
+            _currentPiece = std::make_unique<ShapeL2>();
+            _fallPreview = std::make_unique<ShapeL2>();
+            break;
+        case 2:
+            _currentPiece = std::make_unique<ShapeBar>();
+            _fallPreview = std::make_unique<ShapeBar>();
+            break;
+        case 3:
+            _currentPiece = std::make_unique<ShapeBlock>();
+            _fallPreview = std::make_unique<ShapeBlock>();
+            break;
+        case 4:
+            _currentPiece = std::make_unique<ShapeS>();
+            _fallPreview = std::make_unique<ShapeS>();
+            break;
+        case 5:
+            _currentPiece = std::make_unique<ShapeS2>();
+            _fallPreview = std::make_unique<ShapeS2>();
+            break;
+        case 6:
+            _currentPiece = std::make_unique<ShapeT>();
+            _fallPreview = std::make_unique<ShapeT>();
+            break;
+    }
+
+    _currentPiece->SetRotation(0);
+    _currentPiece->SetPosition({0, 0});
+    _fallPreview->SetRotation(0);
+    _fallPreview->SetPosition({0, 0});
 }
 
 

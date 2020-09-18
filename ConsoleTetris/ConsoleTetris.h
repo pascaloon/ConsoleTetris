@@ -38,6 +38,7 @@ public:
 private:
     bool ValidateTetrimino(const Tetrimino& tetrimino);
     void LockCurrentPiece();
+    void SpawnTetrimino();
     
     const unsigned int _width, _height;
     bool _quit = false;
